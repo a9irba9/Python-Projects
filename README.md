@@ -1,3 +1,4 @@
 - 👋 Hi, I’m @a9irba9
 - 👀 I’m interested in some coding things
 - 🌱 I’m currently learning Python
+- It's Online Text to Speech, and I am controlling it through python
