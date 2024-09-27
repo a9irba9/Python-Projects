@@ -16,10 +16,11 @@ recognition.addEventListener("result", (e) => {
 
     if (e.results[0].isFinal) {
         finalTranscript = transcript;
-        output.textContent = finalTranscript;
+        output.textContent = finalTranscript; // Display the recognized text
+        console.log(finalTranscript); // Log the recognized text
 
-        // Optionally, send the final transcript to the Python server or process it
-        console.log(finalTranscript);
+        // Clear previous text after processing the new one
+        output.textContent = ""; // Clear the text for new recognition
     }
 });
 
