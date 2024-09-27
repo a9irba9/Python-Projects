@@ -1,37 +1,39 @@
-const output = document.getElementById("output");
-let finalTranscript = "";
+const output = document.getElementById('output');
+const startButton = document.getElementById('startButton');
+let finalTranscript = '';
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
 const recognition = new SpeechRecognition();
-
-recognition.lang = "en-US";
+recognition.lang = 'en-US';
 recognition.interimResults = true;
 
-// Start listening automatically when the page loads
-recognition.start();
+startButton.addEventListener('click', () => {
+    finalTranscript = '';
+    output.textContent = '';
+    recognition.start();
+    startButton.textContent = 'Listening...';
+});
 
-recognition.addEventListener("result", (e) => {
-    const transcript = Array.from(e.results).map(result => result[0].transcript).join("");
+recognition.addEventListener('result', (e) => {
+    const transcript = Array.from(e.results)
+        .map(result => result[0].transcript)
+        .join('');
 
     if (e.results[0].isFinal) {
-        finalTranscript = transcript;
-        output.textContent = finalTranscript; // Display the recognized text
-        console.log(finalTranscript); // Log the recognized text
-
-        // Clear previous text after processing the new one
-        output.textContent = ""; // Clear the text for new recognition
+        finalTranscript = transcript; // Update finalTranscript with current transcript
+        output.textContent = finalTranscript; // Display current transcript
     }
 });
 
-// Automatically restart recognition when it ends
-recognition.addEventListener("end", () => {
-    recognition.start();
+recognition.addEventListener('end', () => {
+    startButton.textContent = 'Start Listening';
+    recognition.start(); // Start listening again after it ends
 });
 
-// Stop recognition when the Escape key is pressed
-document.addEventListener("keydown", (e) => {
-    if (e.key == "Escape") {
+// Additional event listener to handle manual stop
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { // Stop listening when the Escape key is pressed
         recognition.stop();
+        startButton.textContent = 'Start Listening';
     }
 });
